@@ -1,4 +1,4 @@
-pragma solidity ^0.4.10;
+pragma solidity ^0.4.23;
 
 //the very fifth example
 contract Example5 {
@@ -9,20 +9,21 @@ contract Example5 {
 
     mapping (address => uint) accounts;
 
-    function deposit() payable {
+    function deposit() public payable {
         accounts[msg.sender] += msg.value;
-        Message("deposit!");
+        emit Message("deposit!");
     }
 
-    function withdraw(uint amount) returns (bool){
+    function withdraw(uint amount) public returns (bool){
+        assert(amount <= accounts[msg.sender]); //SafeMath!
         if(accounts[msg.sender] >= amount) {
             accounts[msg.sender]-= amount;
             if(msg.sender.send(amount)) {
-                Message("withdraw!");
+                emit Message("withdraw!");
                 return true;
             }
         }
-        Message("no withdraw!");
+        emit Message("no withdraw!");
         return false;
     }
 }

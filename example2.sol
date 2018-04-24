@@ -1,4 +1,4 @@
-pragma solidity ^0.4.10;
+pragma solidity ^0.4.23;
 
 //the very second example
 contract Example2 {
@@ -10,11 +10,11 @@ contract Example2 {
 	uint counter;
 	mapping (uint => Account) accounts;
 
-    function Example2(string addr) {
+    constructor(string addr) public {
         accounts[counter++] = Account(addr, 42);
     }
 
-    function get(uint nr) constant returns (string) {
+    function get(uint nr) public constant returns (string) {
         return accounts[nr].addr;
     }
 }
